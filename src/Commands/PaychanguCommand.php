@@ -29,15 +29,18 @@ class PaychanguCommand extends Command
             if (! $isConfigured) {
                 $this->warn('API key not configured for '.$environment.' mode.');
                 $this->line('Run `php artisan paychangu:setup` to configure the SDK.');
+
                 return self::FAILURE;
             }
 
             $this->newLine();
             $this->info('Paychangu SDK is properly configured and ready to use.');
+
             return self::SUCCESS;
 
         } catch (\Exception $e) {
             $this->error('✗ Error: '.$e->getMessage());
+
             return self::FAILURE;
         }
     }

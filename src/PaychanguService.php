@@ -35,9 +35,9 @@ class PaychanguService
 
         if (empty($this->apiKey)) {
             throw new PaychanguException(
-                "Paychangu API key is not configured for {$this->environment} mode. " .
-                "Please run 'php artisan paychangu:setup' or add PAYCHANGU_" .
-                strtoupper($this->environment) . "_KEY to your .env file."
+                "Paychangu API key is not configured for {$this->environment} mode. ".
+                "Please run 'php artisan paychangu:setup' or add PAYCHANGU_".
+                strtoupper($this->environment).'_KEY to your .env file.'
             );
         }
     }
@@ -143,7 +143,7 @@ class PaychanguService
                 'error' => $e->getMessage(),
             ]);
 
-            throw new PaychanguException('An unexpected error occurred: ' . $e->getMessage(), 500, $e);
+            throw new PaychanguException('An unexpected error occurred: '.$e->getMessage(), 500, $e);
         }
     }
 
@@ -214,7 +214,7 @@ class PaychanguService
                 'error' => $e->getMessage(),
             ]);
 
-            throw new PaychanguException('An unexpected error occurred: ' . $e->getMessage(), 500, $e);
+            throw new PaychanguException('An unexpected error occurred: '.$e->getMessage(), 500, $e);
         }
     }
 

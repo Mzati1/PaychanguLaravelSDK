@@ -26,12 +26,12 @@ class PaychanguSetupCommand extends Command
         $this->newLine();
 
         // Step 1: Publish configuration file
-        if (!$this->publishConfig()) {
+        if (! $this->publishConfig()) {
             return self::FAILURE;
         }
 
         // Step 2: Setup environment variables
-        if (!$this->setupEnvironmentVariables()) {
+        if (! $this->setupEnvironmentVariables()) {
             return self::FAILURE;
         }
 
@@ -45,9 +45,10 @@ class PaychanguSetupCommand extends Command
     {
         $configPath = config_path('paychanguConfig.php');
 
-        if (File::exists($configPath) && !$this->option('force')) {
-            if (!$this->confirm('Configuration file already exists. Do you want to overwrite it?', false)) {
+        if (File::exists($configPath) && ! $this->option('force')) {
+            if (! $this->confirm('Configuration file already exists. Do you want to overwrite it?', false)) {
                 $this->info('✓ Using existing configuration file');
+
                 return true;
             }
         }
@@ -61,10 +62,12 @@ class PaychanguSetupCommand extends Command
 
         if (File::exists($configPath)) {
             $this->info('✓ Configuration file published successfully');
+
             return true;
         }
 
         $this->error('✗ Failed to publish configuration file');
+
         return false;
     }
 
@@ -72,9 +75,10 @@ class PaychanguSetupCommand extends Command
     {
         $envPath = base_path('.env');
 
-        if (!File::exists($envPath)) {
+        if (! File::exists($envPath)) {
             $this->error('✗ .env file not found');
             $this->warn('Please create a .env file in your project root first');
+
             return false;
         }
 
@@ -93,10 +97,12 @@ class PaychanguSetupCommand extends Command
         if (File::put($envPath, $envContent)) {
             $this->info('✓ Environment variables configured successfully');
             $this->newLine();
+
             return true;
         }
 
         $this->error('✗ Failed to update .env file');
+
         return false;
     }
 
@@ -116,7 +122,7 @@ class PaychanguSetupCommand extends Command
             $this->line("  → Updated {$key}");
         } else {
             // Add new key at the end
-            $envContent = rtrim($envContent) . "\n\n# Paychangu Configuration\n{$key}={$escapedValue}\n";
+            $envContent = rtrim($envContent)."\n\n# Paychangu Configuration\n{$key}={$escapedValue}\n";
             $this->line("  → Added {$key}");
         }
 
@@ -127,7 +133,7 @@ class PaychanguSetupCommand extends Command
     {
         // If value contains spaces or special characters, wrap in quotes
         if (preg_match('/\s/', $value) || empty($value)) {
-            return '"' . str_replace('"', '\\"', $value) . '"';
+            return '"'.str_replace('"', '\\"', $value).'"';
         }
 
         return $value;

@@ -16,9 +16,6 @@ class PaychanguException extends Exception
 
     /**
      * Render the exception as an HTTP response.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Response
      */
     public function render(\Illuminate\Http\Request $request): \Illuminate\Http\Response|\Illuminate\Http\JsonResponse
     {
