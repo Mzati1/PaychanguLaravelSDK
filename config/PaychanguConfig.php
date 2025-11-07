@@ -22,7 +22,7 @@ return [
     | Options: 'test', 'live'
     |
     */
-    'environment' => env('PAYCHANGU_ENVIRONMENT', 'live'),
+    'environment' => env('PAYCHANGU_ENVIRONMENT', 'test'),
 
     /*
     |--------------------------------------------------------------------------

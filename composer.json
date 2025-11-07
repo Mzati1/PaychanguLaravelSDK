@@ -9,6 +9,7 @@
         "gateway",
         "sdk"
     ],
+    
     "homepage": "https://github.com/Mzati1/PaychanguLaravelSDK",
     "license": "MIT",
     "authors": [
