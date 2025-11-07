@@ -9,7 +9,6 @@
         "gateway",
         "sdk"
     ],
-    
     "homepage": "https://github.com/Mzati1/PaychanguLaravelSDK",
     "license": "MIT",
     "authors": [
@@ -21,12 +20,10 @@
     ],
     "require": {
         "php": "^8.1|^8.2|^8.3",
-        "spatie/laravel-package-tools": "^1.16",
         "illuminate/contracts": "^9.0|^10.0|^11.0",
         "guzzlehttp/guzzle": "^7.8",
         "monolog/monolog": "^3.0",
         "ext-json": "*",
-        "ramsey/uuid": "^4.0",
         "symfony/http-foundation": "^6.0|^7.0"
     },
     "require-dev": {

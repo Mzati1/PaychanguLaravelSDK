@@ -37,7 +37,15 @@ return [
     |--------------------------------------------------------------------------
     |
     | Default currency for transactions.
-    | Supported: MWK (Malawian Kwacha), USD, ZAR, etc.
+    |
+    | Supported Currencies:
+    | - MWK (Malawian Kwacha)
+    | - USD (United States Dollar)
+    | - ZAR (South African Rand)
+    | - GBP (British Pound Sterling)
+    | - EUR (Euro)
+    |
+    | Currency must be a valid ISO 4217 currency code.
     |
     */
     'currency' => env('PAYCHANGU_CURRENCY', 'MWK'),

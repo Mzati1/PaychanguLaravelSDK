@@ -12,15 +12,12 @@ class PaychanguService
 
     protected string $baseUrl;
 
-
     protected int $timeout;
 
     protected string $environment;
 
-    protected string $environment;
-
     /**
-     * Initialize thoke Paychangu service
+     * Initialize the Paychangu service
      */
     public function __construct(?string $environment = null)
     {
@@ -59,19 +56,7 @@ class PaychanguService
      *                       - tx_ref (required): Your unique transaction reference
      *                       - customization (optional): Array with title, description, logo
      *                       - meta (optional): Array of additional metadata
-     * @param  array  $data  Payment data containing:
-     *                       - amount (required): Transaction amount
-     *                       - currency (optional): Currency code (defaults to config)
-     *                       - email (required): Customer email
-     *                       - first_name (optional): Customer first name
-     *                       - last_name (optional): Customer last name
-     *                       - callback_url (required): URL to redirect after payment
-     *                       - return_url (optional): Alternative return URL
-     *                       - tx_ref (required): Your unique transaction reference
-     *                       - customization (optional): Array with title, description, logo
-     *                       - meta (optional): Array of additional metadata
      * @return object Response with checkout_url and other data
-     *
      *
      * @throws PaychanguException
      */
@@ -117,7 +102,6 @@ class PaychanguService
                     'Content-Type' => 'application/json',
                     'Authorization' => 'Bearer '.$this->apiKey,
                 ])
-                ->post($this->baseUrl.'/payment', $payload);
                 ->post($this->baseUrl.'/payment', $payload);
 
             // Handle response
@@ -167,9 +151,7 @@ class PaychanguService
      * Verify a transaction
      *
      * @param  string  $txRef  Your transaction reference
-     * @param  string  $txRef  Your transaction reference
      * @return object Verification response with status and transaction details
-     *
      *
      * @throws PaychanguException
      */
@@ -191,7 +173,6 @@ class PaychanguService
                     'Accept' => 'application/json',
                     'Authorization' => 'Bearer '.$this->apiKey,
                 ])
-                ->get($this->baseUrl.'/verify-payment/'.$txRef);
                 ->get($this->baseUrl.'/verify-payment/'.$txRef);
 
             if (! $response->successful()) {
@@ -258,18 +239,15 @@ class PaychanguService
 
         // Validate email format
         if (! filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
-        if (! filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
             throw new PaychanguException('Invalid email address format');
         }
 
         // Validate amount
         if (! is_numeric($data['amount']) || $data['amount'] <= 0) {
-        if (! is_numeric($data['amount']) || $data['amount'] <= 0) {
             throw new PaychanguException('Amount must be a positive number');
         }
 
         // Validate callback URL
-        if (! filter_var($data['callback_url'], FILTER_VALIDATE_URL)) {
         if (! filter_var($data['callback_url'], FILTER_VALIDATE_URL)) {
             throw new PaychanguException('Invalid callback URL format');
         }
@@ -284,7 +262,6 @@ class PaychanguService
      * Get transaction reference from callback request
      * Helper method to extract tx_ref from callback
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  \Illuminate\Http\Request  $request
      */
     public function getTransactionReference($request): ?string

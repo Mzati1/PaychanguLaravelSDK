@@ -20,7 +20,7 @@ class PaychanguException extends Exception
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Response
      */
-    public function render($request)
+    public function render(\Illuminate\Http\Request $request): \Illuminate\Http\Response|\Illuminate\Http\JsonResponse
     {
         if ($request->expectsJson()) {
             return response()->json([
