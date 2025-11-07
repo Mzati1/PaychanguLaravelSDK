@@ -4,7 +4,6 @@ namespace Mzati\PaychanguSDK\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Mzati\PaychanguSDK\PaychanguServiceProvider;
 
 class TestCase extends Orchestra
 {

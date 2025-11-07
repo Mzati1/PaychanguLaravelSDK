@@ -8,12 +8,8 @@ class PaychanguException extends Exception
 {
     /**
      * Create a new Paychangu exception instance.
-     *
-     * @param string $message
-     * @param int $code
-     * @param \Throwable|null $previous
      */
-    public function __construct(string $message = "", int $code = 0, ?\Throwable $previous = null)
+    public function __construct(string $message = '', int $code = 0, ?\Throwable $previous = null)
     {
         parent::__construct($message, $code, $previous);
     }
@@ -21,7 +17,7 @@ class PaychanguException extends Exception
     /**
      * Render the exception as an HTTP response.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Response
      */
     public function render($request)
@@ -34,7 +30,7 @@ class PaychanguException extends Exception
         }
 
         return response()->view('errors.payment', [
-            'message' => $this->getMessage()
+            'message' => $this->getMessage(),
         ], $this->getCode() ?: 400);
     }
 }

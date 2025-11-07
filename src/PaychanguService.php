@@ -9,14 +9,13 @@ use Mzati\PaychanguSDK\Exceptions\PaychanguException;
 class PaychanguService
 {
     protected string $secretKey;
+
     protected string $baseUrl;
+
     protected int $timeout;
 
     /**
      * Initialize the Paychangu service
-     *
-     * @param string $secretKey
-     * @param string $environment
      */
     public function __construct(string $secretKey, string $environment = 'test')
     {
@@ -35,22 +34,21 @@ class PaychanguService
     /**
      * Initiate a payment transaction
      *
-     * @param array $data Payment data containing:
-     *  - amount (required): Transaction amount
-     *  - currency (optional): Currency code (defaults to config)
-     *  - email (required): Customer email
-     *  - first_name (optional): Customer first name
-     *  - last_name (optional): Customer last name
-     *  - callback_url (required): URL to redirect after payment
-     *  - return_url (optional): Alternative return URL
-     *  - tx_ref (required): Your unique transaction reference
-     *  - customization (optional): Array with title, description, logo
-     *  - meta (optional): Array of additional metadata
-     *
+     * @param  array  $data  Payment data containing:
+     *                       - amount (required): Transaction amount
+     *                       - currency (optional): Currency code (defaults to config)
+     *                       - email (required): Customer email
+     *                       - first_name (optional): Customer first name
+     *                       - last_name (optional): Customer last name
+     *                       - callback_url (required): URL to redirect after payment
+     *                       - return_url (optional): Alternative return URL
+     *                       - tx_ref (required): Your unique transaction reference
+     *                       - customization (optional): Array with title, description, logo
+     *                       - meta (optional): Array of additional metadata
      * @return object Response with checkout_url and other data
+     *
      * @throws PaychanguException
      */
-
     public function initiateTransaction(array $data): object
     {
         // Validate required fields
@@ -90,12 +88,12 @@ class PaychanguService
                 ->withHeaders([
                     'Accept' => 'application/json',
                     'Content-Type' => 'application/json',
-                    'Authorization' => 'Bearer ' . $this->secretKey,
+                    'Authorization' => 'Bearer '.$this->secretKey,
                 ])
-                ->post($this->baseUrl . '/payment', $payload);
+                ->post($this->baseUrl.'/payment', $payload);
 
             // Handle response
-            if (!$response->successful()) {
+            if (! $response->successful()) {
                 $errorMessage = $response->json()['message'] ?? 'Payment initiation failed';
 
                 Log::error('Paychangu: Transaction initiation failed', [
@@ -128,8 +126,9 @@ class PaychanguService
     /**
      * Verify a transaction
      *
-     * @param string $txRef Your transaction reference
+     * @param  string  $txRef  Your transaction reference
      * @return object Verification response with status and transaction details
+     *
      * @throws PaychanguException
      */
     public function verifyTransaction(string $txRef): object
@@ -145,11 +144,11 @@ class PaychanguService
             $response = Http::timeout($this->timeout)
                 ->withHeaders([
                     'Accept' => 'application/json',
-                    'Authorization' => 'Bearer ' . $this->secretKey,
+                    'Authorization' => 'Bearer '.$this->secretKey,
                 ])
-                ->get($this->baseUrl . '/verify-payment/' . $txRef);
+                ->get($this->baseUrl.'/verify-payment/'.$txRef);
 
-            if (!$response->successful()) {
+            if (! $response->successful()) {
                 $errorMessage = $response->json()['message'] ?? 'Transaction verification failed';
 
                 Log::error('Paychangu: Verification failed', [
@@ -181,16 +180,13 @@ class PaychanguService
         }
     }
 
-
     /**
      * HELPERS
      */
 
-
     /**
      * Validate initiate transaction data
      *
-     * @param array $data
      * @throws PaychanguException
      */
     protected function validateInitiateData(array $data): void
@@ -204,17 +200,17 @@ class PaychanguService
         }
 
         // Validate email format
-        if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+        if (! filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
             throw new PaychanguException('Invalid email address format');
         }
 
         // Validate amount
-        if (!is_numeric($data['amount']) || $data['amount'] <= 0) {
+        if (! is_numeric($data['amount']) || $data['amount'] <= 0) {
             throw new PaychanguException('Amount must be a positive number');
         }
 
         // Validate callback URL
-        if (!filter_var($data['callback_url'], FILTER_VALIDATE_URL)) {
+        if (! filter_var($data['callback_url'], FILTER_VALIDATE_URL)) {
             throw new PaychanguException('Invalid callback URL format');
         }
 
@@ -228,8 +224,7 @@ class PaychanguService
      * Get transaction reference from callback request
      * Helper method to extract tx_ref from callback
      *
-     * @param \Illuminate\Http\Request $request
-     * @return string|null
+     * @param  \Illuminate\Http\Request  $request
      */
     public function getTransactionReference($request): ?string
     {
@@ -243,8 +238,6 @@ class PaychanguService
 
     /**
      * Get the current environment
-     *
-     * @return string
      */
     public function getEnvironment(): string
     {
@@ -258,8 +251,6 @@ class PaychanguService
 
     /**
      * Check if in test mode
-     *
-     * @return bool
      */
     public function istest(): bool
     {
