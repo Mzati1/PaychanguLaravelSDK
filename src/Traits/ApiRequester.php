@@ -2,7 +2,6 @@
 
 namespace Mzati\PaychanguSDK\Traits;
 
-use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Mzati\PaychanguSDK\Exceptions\PaychanguException;

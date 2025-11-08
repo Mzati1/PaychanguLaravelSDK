@@ -12,12 +12,12 @@ class PaychanguSetupCommand extends Command
     public $description = 'Setup Paychangu SDK configuration and environment variables';
 
     protected array $envVariables = [
-        'PAYCHANGU_SECRET_KEY'    => 'sk_test_xxxxx',
-        'PAYCHANGU_TEST_KEY'      => 'pk_test_xxxxx',
-        'PAYCHANGU_ENVIRONMENT'   => 'test',
-        'PAYCHANGU_BASE_URL'      => 'https://api.paychangu.com',
-        'PAYCHANGU_CURRENCY'      => 'MWK',
-        'PAYCHANGU_TIMEOUT'       => '30',
+        'PAYCHANGU_SECRET_KEY' => 'sk_test_xxxxx',
+        'PAYCHANGU_TEST_KEY' => 'pk_test_xxxxx',
+        'PAYCHANGU_ENVIRONMENT' => 'test',
+        'PAYCHANGU_BASE_URL' => 'https://api.paychangu.com',
+        'PAYCHANGU_CURRENCY' => 'MWK',
+        'PAYCHANGU_TIMEOUT' => '30',
     ];
 
     public function handle(): int
@@ -41,6 +41,7 @@ class PaychanguSetupCommand extends Command
         if (! $envPath) {
             $this->error('No .env file found.');
             $this->warn('Create a .env file first.');
+
             return false;
         }
 
@@ -50,7 +51,8 @@ class PaychanguSetupCommand extends Command
         try {
             $envContent = File::get($envPath);
         } catch (\Throwable $e) {
-            $this->error('Unable to read .env file: ' . $e->getMessage());
+            $this->error('Unable to read .env file: '.$e->getMessage());
+
             return false;
         }
 
@@ -63,11 +65,13 @@ class PaychanguSetupCommand extends Command
         try {
             File::put($envPath, $envContent);
         } catch (\Throwable $e) {
-            $this->error('Failed to update .env file: ' . $e->getMessage());
+            $this->error('Failed to update .env file: '.$e->getMessage());
+
             return false;
         }
 
         $this->info('Environment variables updated.');
+
         return true;
     }
 
@@ -89,7 +93,7 @@ class PaychanguSetupCommand extends Command
             return $primary;
         }
 
-        $files = array_filter($candidates, fn ($f) => !str_ends_with($f, '.example'));
+        $files = array_filter($candidates, fn ($f) => ! str_ends_with($f, '.example'));
 
         // If only one .env-like file exists, use it
         if (count($files) === 1) {
@@ -130,7 +134,7 @@ class PaychanguSetupCommand extends Command
 
     protected function escapeEnvValue(string $value): string
     {
-        return preg_match('/\s/', $value) ? '"' . addslashes($value) . '"' : $value;
+        return preg_match('/\s/', $value) ? '"'.addslashes($value).'"' : $value;
     }
 
     protected function displaySuccessMessage(): void
