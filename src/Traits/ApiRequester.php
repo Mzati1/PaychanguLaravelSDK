@@ -23,14 +23,22 @@ trait ApiRequester
         $url = $this->baseUrl.$endpoint;
 
         try {
-            $method = strtolower($method);
-            $response = Http::timeout($this->timeout)
+            $method = strtoupper($method);
+
+            $httpClient = Http::timeout($this->timeout)
                 ->withHeaders([
                     'Accept' => 'application/json',
                     'Content-Type' => 'application/json',
                     'Authorization' => 'Bearer '.$this->apiKey,
-                ])
-                ->{$method}($url, $payload);
+                ]);
+
+            // Handle GET requests differently (no body, use query parameters)
+            if ($method === 'GET') {
+                $response = $httpClient->get($url, $payload);
+            } else {
+                // POST, PUT, PATCH, DELETE can have body
+                $response = $httpClient->{strtolower($method)}($url, $payload);
+            }
 
             if (! $response->successful()) {
                 $errorData = $response->json();
@@ -38,8 +46,10 @@ trait ApiRequester
 
                 Log::error('Paychangu: API request failed', [
                     'endpoint' => $endpoint,
+                    'method' => $method,
                     'status' => $response->status(),
                     'error' => $errorMessage,
+                    'response' => $errorData,
                 ]);
 
                 throw new PaychanguException($errorMessage, $response->status());
@@ -47,10 +57,15 @@ trait ApiRequester
 
             return (object) $response->json();
 
+        } catch (PaychanguException $e) {
+            // Re-throw PaychanguException as-is
+            throw $e;
         } catch (\Exception $e) {
             Log::error('Paychangu: Unexpected error during API request', [
                 'endpoint' => $endpoint,
+                'method' => $method,
                 'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
             ]);
 
             throw new PaychanguException('An unexpected error occurred: '.$e->getMessage(), 500, $e);
