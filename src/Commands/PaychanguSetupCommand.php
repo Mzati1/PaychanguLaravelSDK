@@ -47,7 +47,7 @@ class PaychanguSetupCommand extends Command
 
         if (File::exists($configPath) && ! $this->option('force')) {
             if (! $this->confirm('Configuration file already exists. Do you want to overwrite it?', false)) {
-                $this->info('✓ Using existing configuration file');
+                $this->info('Using existing configuration file');
 
                 return true;
             }
@@ -61,12 +61,12 @@ class PaychanguSetupCommand extends Command
         ]);
 
         if (File::exists($configPath)) {
-            $this->info('✓ Configuration file published successfully');
+            $this->info('Configuration file published successfully');
 
             return true;
         }
 
-        $this->error('✗ Failed to publish configuration file');
+        $this->error('Failed to publish configuration file');
 
         return false;
     }
@@ -76,7 +76,7 @@ class PaychanguSetupCommand extends Command
         $envPath = base_path('.env');
 
         if (! File::exists($envPath)) {
-            $this->error('✗ .env file not found');
+            $this->error('.env file not found');
             $this->warn('Please create a .env file in your project root first');
 
             return false;
@@ -95,13 +95,13 @@ class PaychanguSetupCommand extends Command
 
         // Write back to .env file
         if (File::put($envPath, $envContent)) {
-            $this->info('✓ Environment variables configured successfully');
+            $this->info('Environment variables configured successfully');
             $this->newLine();
 
             return true;
         }
 
-        $this->error('✗ Failed to update .env file');
+        $this->error('Failed to update .env file');
 
         return false;
     }
