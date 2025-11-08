@@ -31,6 +31,12 @@ php artisan paychangu:setup
 
 This will guide you through configuring your environment variables and publish the configuration file.
 
+### Publish Config files
+
+```bash
+php artisan vendor:publish --tag=paychangu-config
+```
+
 ### Manual Setup
 
 Add these variables to your `.env` file:
