@@ -13,6 +13,12 @@ class PaychanguServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        // Merge config
+        $this->mergeConfigFrom(
+            __DIR__.'/../config/paychangu.php',
+            'paychangu'
+        );
+
         $this->app->singleton('paychangu', function ($app) {
             return new PaychanguService;
         });
@@ -25,6 +31,12 @@ class PaychanguServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Publish config
+        $this->publishes([
+            __DIR__.'/../config/paychangu.php' => config_path('paychangu.php'),
+        ], 'paychangu-config');
+
+        // Register commands
         if ($this->app->runningInConsole()) {
             $this->commands([
                 PaychanguCommand::class,

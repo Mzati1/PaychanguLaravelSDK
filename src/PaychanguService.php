@@ -76,18 +76,22 @@ class PaychanguService
      *
      * @throws \Exception
      */
-    public function __call(string $method, array $parameters): object
-    {
-        if (method_exists($this, $method)) {
-            return $this->{$method}(...$parameters);
-        }
-
-        if (property_exists($this, $method)) {
-            return $this->{$method};
-        }
-
-        return $this->makeApiRequest(...$parameters);
+public function __call(string $method, array $parameters): object
+{
+    if (method_exists($this, $method)) {
+        return $this->{$method}(...$parameters);
     }
+
+    if (property_exists($this, $method)) {
+        return $this->{$method};
+    }
+
+    $endpoint = $method;
+    $payload  = $parameters[0] ?? [];
+
+    return $this->makeApiRequest('POST', $endpoint, $payload);
+}
+
 
     /**
      * Get transaction reference from callback request

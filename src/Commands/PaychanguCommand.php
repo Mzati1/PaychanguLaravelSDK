@@ -18,14 +18,14 @@ class PaychanguCommand extends Command
         try {
             $service = app('paychangu');
             $environment = $service->getEnvironment();
-            $isConfigured = ! empty(config('paychanguConfig.'.($environment === 'live' ? 'secret_key' : 'test_key')));
+            $isConfigured = ! empty(config('paychangu.'.($environment === 'live' ? 'secret_key' : 'test_key')));
 
             $this->line('Environment: '.($environment === 'live' ? '
 
             LIVE' : 'TEST'));
-            $this->line('Base URL: '.config('paychanguConfig.base_url'));
-            $this->line('Default Currency: '.config('paychanguConfig.currency'));
-            $this->line('Timeout: '.config('paychanguConfig.timeout').' seconds');
+            $this->line('Base URL: '.config('paychangu.base_url'));
+            $this->line('Default Currency: '.config('paychangu.currency'));
+            $this->line('Timeout: '.config('paychangu.timeout').' seconds');
             $this->line('API Key: '.($isConfigured ? 'Configured' : '✗ Missing'));
 
             if (! $isConfigured) {

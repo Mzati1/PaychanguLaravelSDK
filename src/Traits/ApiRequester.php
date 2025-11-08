@@ -24,6 +24,7 @@ trait ApiRequester
         $url = $this->baseUrl.$endpoint;
 
         try {
+            $method = strtolower($method);
             $response = Http::timeout($this->timeout)
                 ->withHeaders([
                     'Accept' => 'application/json',
@@ -47,13 +48,6 @@ trait ApiRequester
 
             return (object) $response->json();
 
-        } catch (ConnectionException $e) {
-            Log::error('Paychangu: Connection error', [
-                'endpoint' => $endpoint,
-                'error' => $e->getMessage(),
-            ]);
-
-            throw new PaychanguException('Unable to connect to Paychangu. Please try again.', 503, $e);
         } catch (\Exception $e) {
             Log::error('Paychangu: Unexpected error during API request', [
                 'endpoint' => $endpoint,
