@@ -13,20 +13,10 @@ class PaychanguServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        // Merge package config with user's published config
-        $this->mergeConfigFrom(
-            __DIR__.'/../config/PaychanguConfig.php',
-            'paychanguConfig'
-        );
-
-        // Bind the main service to the container as a singleton
         $this->app->singleton('paychangu', function ($app) {
-            return new PaychanguService(
-                config('paychanguConfig.environment', 'test')
-            );
+            return new PaychanguService();
         });
 
-        // Register the facade alias
         $this->app->alias('paychangu', PaychanguService::class);
     }
 
@@ -36,12 +26,6 @@ class PaychanguServiceProvider extends ServiceProvider
     public function boot(): void
     {
         if ($this->app->runningInConsole()) {
-            // Publish config file
-            $this->publishes([
-                __DIR__.'/../config/PaychanguConfig.php' => config_path('paychanguConfig.php'),
-            ], 'paychanguConfig-config');
-
-            // Register commands
             $this->commands([
                 PaychanguCommand::class,
                 PaychanguSetupCommand::class,

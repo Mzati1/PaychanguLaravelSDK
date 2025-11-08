@@ -42,14 +42,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Mzati\\PaychanguSDK\\": "src/",
-            "Mzati\\PaychanguSDK\\Database\\Factories\\": "database/factories/"
+            "Mzati\\PaychanguSDK\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Mzati\\PaychanguSDK\\Tests\\": "tests/",
-            "Workbench\\App\\": "workbench/app/"
+            "Mzati\\PaychanguSDK\\Tests\\": "tests/"
         }
     },
     "scripts": {
