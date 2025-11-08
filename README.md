@@ -459,9 +459,6 @@ The SDK automatically logs to Laravel's default log channel:
 
 - MWK (Malawian Kwacha)
 - USD (United States Dollar)
-- ZAR (South African Rand)
-- GBP (British Pound)
-- EUR (Euro)
 
 ## Testing
 
