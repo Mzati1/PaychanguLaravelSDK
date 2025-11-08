@@ -12,16 +12,16 @@ class DirectCardEndpoint extends AbstractEndpoint
     /**
      * Charge a card directly
      *
-     * @param array $data
      * @return object
+     *
      * @throws PaychanguException
      */
     public function chargeACard(array $data)
     {
         $requiredFields = ['card_number', 'expiry', 'cvv', 'cardholder_name', 'amount', 'currency', 'charge_id', 'redirect_url'];
-        
+
         foreach ($requiredFields as $field) {
-            if (!isset($data[$field]) || empty($data[$field])) {
+            if (! isset($data[$field]) || empty($data[$field])) {
                 throw new \InvalidArgumentException("The field '{$field}' is required for card charging.");
             }
         }
@@ -37,17 +37,18 @@ class DirectCardEndpoint extends AbstractEndpoint
             'redirect_url' => $data['redirect_url'],
         ];
 
-        if (isset($data['email']) && !empty($data['email'])) {
+        if (isset($data['email']) && ! empty($data['email'])) {
             $payload['email'] = $data['email'];
         }
 
         return $this->service->makeApiRequest('POST', '/charge-card/payments', $payload);
     }
+
     /**
      * Verify a card charge
      *
-     * @param string $chargeId
      * @return object
+     *
      * @throws PaychanguException
      */
     public function verifyCardCharge(string $chargeId)
@@ -62,8 +63,8 @@ class DirectCardEndpoint extends AbstractEndpoint
     /**
      * Refund a card charge
      *
-     * @param string $chargeId
      * @return object
+     *
      * @throws PaychanguException
      */
     public function refundCardCharge(string $chargeId)

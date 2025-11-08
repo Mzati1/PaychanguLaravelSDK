@@ -11,16 +11,16 @@ class BankTransferEndpoint extends AbstractEndpoint
     /**
      * Initialize bank transfer payment
      *
-     * @param array $data
      * @return object
+     *
      * @throws \Exception
      */
     public function bankTransfer(array $data)
     {
         $requiredFields = ['amount', 'charge_id'];
-        
+
         foreach ($requiredFields as $field) {
-            if (!isset($data[$field])) {
+            if (! isset($data[$field])) {
                 throw new \InvalidArgumentException("Missing required field: {$field}");
             }
         }
@@ -35,8 +35,8 @@ class BankTransferEndpoint extends AbstractEndpoint
     /**
      * Retrieve single bank transaction details
      *
-     * @param string $transactionId
      * @return object
+     *
      * @throws \Exception
      */
     public function retrieveSingleBankTransaction(string $transactionId)

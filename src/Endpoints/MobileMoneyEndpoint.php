@@ -12,6 +12,7 @@ class MobileMoneyEndpoint extends AbstractEndpoint
      * Get supported mobile money operators
      *
      * @return object
+     *
      * @throws \Exception
      */
     public function getMobileMoneyOperators()
@@ -22,16 +23,16 @@ class MobileMoneyEndpoint extends AbstractEndpoint
     /**
      * Charge mobile money
      *
-     * @param array $data
      * @return object
+     *
      * @throws \Exception
      */
     public function chargeMobileMoney(array $data)
     {
         $requiredFields = ['mobile_money_operator_ref_id', 'mobile', 'amount', 'charge_id'];
-        
+
         foreach ($requiredFields as $field) {
-            if (!isset($data[$field])) {
+            if (! isset($data[$field])) {
                 throw new \InvalidArgumentException("Missing required field: {$field}");
             }
         }
@@ -42,8 +43,8 @@ class MobileMoneyEndpoint extends AbstractEndpoint
     /**
      * Verify direct charge status
      *
-     * @param string $chargeId
      * @return object
+     *
      * @throws \Exception
      */
     public function verifyDirectChargeStatus(string $chargeId)
@@ -54,8 +55,8 @@ class MobileMoneyEndpoint extends AbstractEndpoint
     /**
      * Get single charge details
      *
-     * @param string $chargeId
      * @return object
+     *
      * @throws \Exception
      */
     public function singleMobileChargeDetails(string $chargeId)

@@ -14,7 +14,7 @@ class PaychanguServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton('paychangu', function ($app) {
-            return new PaychanguService();
+            return new PaychanguService;
         });
 
         $this->app->alias('paychangu', PaychanguService::class);

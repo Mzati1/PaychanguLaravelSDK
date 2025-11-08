@@ -2,8 +2,6 @@
 
 namespace Mzati\PaychanguSDK;
 
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
 use Mzati\PaychanguSDK\Exceptions\PaychanguException;
 use Mzati\PaychanguSDK\Traits\ApiRequester;
 
@@ -12,8 +10,11 @@ class PaychanguService
     use ApiRequester;
 
     protected string $apiKey;
+
     protected string $baseUrl;
+
     protected int $timeout;
+
     protected string $environment;
 
     /**
@@ -72,9 +73,6 @@ class PaychanguService
     /**
      * Dynamically handle calls to the API requester.
      *
-     * @param  string  $method
-     * @param  array  $parameters
-     * @return object
      *
      * @throws \Exception
      */
