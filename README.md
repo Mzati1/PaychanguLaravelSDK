@@ -79,7 +79,7 @@ $transaction = Paychangu::initiateTransaction([
 ]);
 
 // Redirect user to checkout
-return redirect($transaction->data->checkout_url);
+return redirect($transaction->data['checkout_url']);
 ```
 
 ### Verifying a Transaction
@@ -97,7 +97,7 @@ public function handleCallback(Request $request)
     
     $verification = Paychangu::verifyTransaction($txRef);
     
-    if ($verification->data->status === 'successful') {
+    if ($verification->data['status'] === 'successful') {
         // Payment successful
         return redirect()->route('payment.success');
     }
@@ -213,11 +213,6 @@ The SDK automatically logs all transactions and errors to Laravel's default log 
 
 - MWK (Malawian Kwacha)
 - USD (United States Dollar)
-- ZAR (South African Rand)
-- GBP (British Pound Sterling)
-- EUR (Euro)
-
-All currencies must be valid ISO 4217 currency codes.
 
 ## Testing
 
@@ -242,11 +237,6 @@ composer analyse
 ## Security
 
 If you discover any security vulnerabilities, please email mzatitembo01@gmail.com instead of using the issue tracker.
-
-## Credits
-
-- [Mzati Tembo](https://github.com/Mzati1)
-- [All Contributors](../../contributors)
 
 ## License
 
