@@ -36,7 +36,7 @@ trait ApiRequester
         $url = $baseUrl.'/'.$endpoint;
 
         // Validate final URL format
-        if (!filter_var($url, FILTER_VALIDATE_URL)) {
+        if (! filter_var($url, FILTER_VALIDATE_URL)) {
             Log::error('Paychangu: Invalid URL constructed', [
                 'base_url' => $this->baseUrl,
                 'endpoint' => $endpoint,
