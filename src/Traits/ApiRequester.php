@@ -20,7 +20,36 @@ trait ApiRequester
      */
     protected function makeApiRequest(string $method, string $endpoint, array $payload = []): object
     {
-        $url = $this->baseUrl.$endpoint;
+        // Validate base URL
+        if (empty($this->baseUrl)) {
+            throw new PaychanguException('Base URL is not configured', 500);
+        }
+
+        // Validate endpoint
+        if (empty($endpoint)) {
+            throw new PaychanguException('API endpoint cannot be empty', 500);
+        }
+
+        // Ensure proper URL construction with forward slashes
+        $baseUrl = rtrim($this->baseUrl, '/');
+        $endpoint = ltrim($endpoint, '/');
+        $url = $baseUrl.'/'.$endpoint;
+
+        // Validate final URL format
+        if (!filter_var($url, FILTER_VALIDATE_URL)) {
+            Log::error('Paychangu: Invalid URL constructed', [
+                'base_url' => $this->baseUrl,
+                'endpoint' => $endpoint,
+                'final_url' => $url,
+            ]);
+            throw new PaychanguException("Invalid API URL constructed: {$url}", 500);
+        }
+
+        Log::debug('Paychangu: API request initiated', [
+            'url' => $url,
+            'method' => $method,
+            'endpoint' => $endpoint,
+        ]);
 
         try {
             $method = strtoupper($method);
