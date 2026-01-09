@@ -19,6 +19,7 @@ A robust and modular Laravel SDK for integrating PayChangu payment services. Thi
 - **Bill Payments**: Validate and pay bills (LWB, ESCOM, etc.).
 - **Airtime**: Recharge airtime (TNM, Airtel).
 - **Verification**: Verify transactions across all services.
+- **Virtual Accounts (USD)**: Manage customers and US virtual accounts.
 
 ## Installation
 
@@ -321,6 +322,68 @@ $airtime = Paychangu::buy_airtime([
 ]);
 ```
 reference is optional.
+
+---
+
+### 9. Virtual Accounts (USD)
+
+**Create Customer:**
+
+```php
+$customer = Paychangu::create_virtual_account_customer([
+    'email' => 'john@example.com',
+    'first_name' => 'John',
+    'last_name' => 'Banda',
+]);
+```
+
+**List Customers:**
+
+```php
+$customers = Paychangu::get_virtual_account_customers([
+    'page' => 1,
+    'per_page' => 20,
+]);
+```
+
+**Get Customer:**
+
+```php
+$customer = Paychangu::get_virtual_account_customer('customer_id_here');
+```
+
+**Update Customer:**
+
+```php
+$updated = Paychangu::update_virtual_account_customer('customer_id_here', [
+    'email' => 'new-email@example.com',
+]);
+```
+
+**Delete Customer:**
+
+```php
+$deleted = Paychangu::delete_virtual_account_customer('customer_id_here');
+```
+
+**Create US Account (Virtual IBAN):**
+
+```php
+$account = Paychangu::create_us_account('customer_id_here');
+```
+
+**Deactivate/Reactivate US Account:**
+
+```php
+$deactivated = Paychangu::deactivate_us_account('customer_id_here');
+$reactivated = Paychangu::reactivate_us_account('customer_id_here');
+```
+
+**US Account Activity:**
+
+```php
+$activity = Paychangu::us_account_activity('customer_id_here');
+```
 
 ## Testing
 

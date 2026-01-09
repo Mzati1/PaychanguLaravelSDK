@@ -15,6 +15,7 @@ use Paychangu\Laravel\Resources\MobileMoney\MobileMoney;
 use Paychangu\Laravel\Resources\Payouts\BankPayout;
 use Paychangu\Laravel\Resources\Payouts\MobileMoneyPayout;
 use Paychangu\Laravel\Resources\Verification;
+use Paychangu\Laravel\Resources\VirtualAccount\Customers as VirtualAccountCustomers;
 
 class Paychangu
 {
@@ -354,6 +355,57 @@ class Paychangu
 
     /*
     |--------------------------------------------------------------------------
+    | Virtual Account (USD) Methods
+    |--------------------------------------------------------------------------
+    */
+
+    public function create_virtual_account_customer(array $data): array
+    {
+        return $this->virtual_account_customers()->createCustomer($data);
+    }
+
+    public function get_virtual_account_customers(array $query = []): array
+    {
+        return $this->virtual_account_customers()->getAllCustomers($query);
+    }
+
+    public function get_virtual_account_customer(string $customerId): array
+    {
+        return $this->virtual_account_customers()->getCustomer($customerId);
+    }
+
+    public function update_virtual_account_customer(string $customerId, array $data): array
+    {
+        return $this->virtual_account_customers()->updateCustomer($customerId, $data);
+    }
+
+    public function delete_virtual_account_customer(string $customerId): array
+    {
+        return $this->virtual_account_customers()->deleteCustomer($customerId);
+    }
+
+    public function create_us_account(string $customerId): array
+    {
+        return $this->virtual_account_customers()->createUSAccount($customerId);
+    }
+
+    public function deactivate_us_account(string $customerId): array
+    {
+        return $this->virtual_account_customers()->deactivateUSAccount($customerId);
+    }
+
+    public function reactivate_us_account(string $customerId): array
+    {
+        return $this->virtual_account_customers()->reactivateUSAccount($customerId);
+    }
+
+    public function us_account_activity(string $customerId): array
+    {
+        return $this->virtual_account_customers()->usAccountActivities($customerId);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
     | Direct Charge (Bank Transfer) Methods
     |--------------------------------------------------------------------------
     */
@@ -438,5 +490,13 @@ class Paychangu
         $client = new Client($this->privateKey, $url);
 
         return new Verification($client);
+    }
+
+    public function virtual_account_customers(): VirtualAccountCustomers
+    {
+        $url = $this->apiBaseUrl.'virtual-account/api/';
+        $client = new Client($this->privateKey, $url);
+
+        return new VirtualAccountCustomers($client);
     }
 }

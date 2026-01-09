@@ -48,9 +48,9 @@ it('can reach checkout create endpoint', function () {
     try {
         $paychangu->create_checkout_link([
             'amount' => 1000,
+            'callback_url' => 'https://example.com/ipn',
+            'return_url' => 'https://example.com/return',
             'email' => 'test@example.com',
-            'first_name' => 'John',
-            'last_name' => 'Doe',
         ]);
         expect(true)->toBeTrue();
     } catch (\Exception $e) {
@@ -62,6 +62,16 @@ it('can reach checkout verify endpoint', function () {
     $paychangu = new Paychangu;
     try {
         $paychangu->verify_checkout('test_ref');
+        expect(true)->toBeTrue();
+    } catch (\Exception $e) {
+        checkReachability($e);
+    }
+});
+
+it('can reach virtual account customers endpoint', function () {
+    $paychangu = new Paychangu;
+    try {
+        $paychangu->get_virtual_account_customers();
         expect(true)->toBeTrue();
     } catch (\Exception $e) {
         checkReachability($e);
